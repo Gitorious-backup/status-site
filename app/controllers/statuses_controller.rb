@@ -32,6 +32,8 @@ class StatusesController < ApplicationController
   def current
     @status = Status.current
     @problem = @status.ok? ? Status.last_problem : nil
+    headers["X-Gitorious-Status-Code"] = @status.status_text
+    headers["X-Gitorious-Status-Text"] = @status.title
   end
 
   def create

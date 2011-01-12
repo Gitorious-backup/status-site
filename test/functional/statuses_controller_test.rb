@@ -76,7 +76,21 @@ class StatusesControllerTest < ActionController::TestCase
       get :current
       assert_equal @current_status, assigns(:status)
     end
-    
+
+    should "indicate ok status in custom header" do
+      get :current
+
+      assert_equal "Ok", response.headers["X-Gitorious-Status-Code"]
+      assert_equal "All OK", response.headers["X-Gitorious-Status-Text"]
+    end
+
+    should "indicate down status in custom header" do
+      Status.create :title => "Oh noes", :status => Status::DOWN
+      get :current
+
+      assert_equal "Down", response.headers["X-Gitorious-Status-Code"]
+      assert_equal "Oh noes", response.headers["X-Gitorious-Status-Text"]
+    end
   end
 
   def create_valid_status
