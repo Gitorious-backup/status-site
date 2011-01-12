@@ -37,6 +37,30 @@ class StatusTest < ActiveSupport::TestCase
         status.save
       end
     end
+
+    should "express OK status as text" do
+      status = Status.new :status => Status::OK
+
+      assert_equal "Ok", status.status_text
+    end
+
+    should "express sorta status as text" do
+      status = Status.new :status => Status::SORTA
+
+      assert_equal "Sorta", status.status_text
+    end
+
+    should "express Down status as text" do
+      status = Status.new :status => Status::DOWN
+
+      assert_equal "Down", status.status_text
+    end
+
+    should "express missing status as empty string" do
+      status = Status.new
+
+      assert_equal "", status.status_text
+    end
   end
 
   should validate_presence_of :title

@@ -14,4 +14,8 @@ class Status < ActiveRecord::Base
     return self[:status] = code if [OK, SORTA, DOWN].include?(code)
     false
   end
+
+  def status_text
+    status == OK && "Ok" || status == SORTA && "Sorta" || status == DOWN && "Down" || ""
+  end
 end
