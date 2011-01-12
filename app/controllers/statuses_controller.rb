@@ -31,6 +31,7 @@ class StatusesController < ApplicationController
 
   def current
     @status = Status.current
+    @problem = @status.ok? ? Status.last_problem : nil
   end
 
   def create
