@@ -57,6 +57,12 @@ h1 {
     padding: 10px 0 0;
 }
 
+h1 span {
+    display: block;
+    font-size: 0.25em;
+    margin: 0 0 1em;
+}
+
 #problem {
     clear: left;
     font-size: .9em;

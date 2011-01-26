@@ -31,6 +31,7 @@ class StatusesController < ApplicationController
 
   def current
     @status = Status.current
+    @created_at = @status.created_at.strftime('%Y-%m-%d %H:%M:%S')
     @problem = @status.ok? ? Status.last_problem : nil
     headers["X-Gitorious-Status-Code"] = @status.status_text
     headers["X-Gitorious-Status-Text"] = @status.title
