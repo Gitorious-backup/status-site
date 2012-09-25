@@ -17,7 +17,7 @@ class TwitterUpdate
                 ""
               end
     result << "#{status.title}"
-    body = ": #{status.body}"
+    body =  status.body.blank? ? "" : ": #{status.body}" 
     remaining = (140 - result.size)
     if status.sorta?
       result << " Read more on http://status.gitorious.org/"

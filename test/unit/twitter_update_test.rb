@@ -11,6 +11,11 @@ class TwitterUpdateTest < ActiveSupport::TestCase
     assert_equal "[UP] OK", twitter_update(status)
   end
 
+  should "not use a colon if no body provided" do
+    status = Status.new(:title => "OK", :status => Status::OK)
+    assert_equal "[UP] OK", twitter_update(status)
+  end
+
   should "format down message" do
     status = Status.new(:status => Status::DOWN)
     assert_match "[DOWN]", twitter_update(status)
