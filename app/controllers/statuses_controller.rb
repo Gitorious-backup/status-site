@@ -37,9 +37,11 @@ class StatusesController < ApplicationController
     headers["X-Gitorious-Status-Text"] = @status.title
   end
 
-  def create
+  def create    
     @status = Status.new(params[:status])
-
+    if @status.post_to_twitter == "1"
+      post_to_twitter(@status)
+    end
     respond_to do |format|
       if @status.save
         format.html { redirect_to(@status, :notice => 'Status was successfully created.') }
@@ -63,6 +65,17 @@ class StatusesController < ApplicationController
     end
   end
 
+  def post_to_twitter(status)
+    TwitterUpdate.update do
+      client = Twitter::Client.new(
+                                   :consumer_key => ENV["TWITTER_CONSUMER_KEY"],
+                                   :consumer_secret => ENV["TWITTER_CONSUMER_SECRET"],
+                                   :oauth_token => ENV["TWITTER_OAUTH_KEY"],
+                                   :oauth_token_secret => ENV["TWITTER_OAUTH_SECRET"])
+      client.update(TwitterUpdate.new(status).message)
+    end
+  end
+  
   private
   def login_required
     redirect_to new_session_path if session[:current_user_id].nil?

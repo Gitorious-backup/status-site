@@ -24,6 +24,11 @@
       <label for="status_status_<%= status %>"><%= Status.status_text(status) %></label>
     <% end %>
   </div>
+
+  <div class="field">
+    <%= f.label :post_to_twitter %>
+    <%= f.check_box :post_to_twitter %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

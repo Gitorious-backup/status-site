@@ -43,7 +43,37 @@ class StatusesControllerTest < ActionController::TestCase
       assert_no_difference("Status.count") do
         post :create, :status => {:title => "All OK", :body => "Yeah"}
       end
-    end    
+    end
+  end
+
+  context "Update Twitter" do
+    setup do
+      login_as(User.create({:login => "bob", :password => "mule"}))
+    end
+
+    should "not connect to Twitter if environment vars aren't set" do
+      @controller.expects(:post_to_twitter)
+      post :create, :status => {:title => "All OK", :body => "Yeah", :post_to_twitter => "1"}
+    end
+
+    should "send to Twitter if environment vars are set" do
+      client = stub
+      client.expects(:update).with("[UP] OK: Yeah")
+      token = "abc"
+      secret = "def"
+      consumer_key = "001"
+      consumer_secret = "002"
+      Twitter::Client.expects(:new).with(
+                                         :oauth_token => token,
+                                         :oauth_token_secret => secret,
+                                         :consumer_key => consumer_key,
+                                         :consumer_secret => consumer_secret).returns(client)
+      ENV["TWITTER_OAUTH_KEY"] = token
+      ENV["TWITTER_OAUTH_SECRET"] = secret
+      ENV["TWITTER_CONSUMER_KEY"] = consumer_key
+      ENV["TWITTER_CONSUMER_SECRET"] = consumer_secret
+      post :create, :status => {:title => "OK", :body => "Yeah", :post_to_twitter => "1", :status => Status::OK}
+    end
   end
 
   context "Updating an existing status" do

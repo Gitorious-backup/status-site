@@ -11,6 +11,11 @@ group :test do
   gem "shoulda"
 end
 
+gem "oauth"
+gem "twitter"
+
+gem "mocha"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

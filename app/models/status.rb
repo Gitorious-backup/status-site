@@ -6,6 +6,8 @@ class Status < ActiveRecord::Base
   validates_presence_of :title, :status
   scope :problems, { :conditions => ["status in (2, 3)"], :order => "created_at desc" }
 
+  attr_accessor :post_to_twitter
+
   def status=(code)
     code = code.to_i
     return self[:status] = code if @@statuses.include?(code)
