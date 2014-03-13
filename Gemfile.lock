@@ -34,6 +34,9 @@ GEM
     bcrypt-ruby (2.1.4)
     buftok (0.2.0)
     builder (2.1.2)
+    dotenv (0.10.0)
+    dotenv-rails (0.10.0)
+      dotenv (= 0.10.0)
     equalizer (0.0.9)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -103,6 +106,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt-ruby
+  dotenv-rails
   mocha
   oauth
   rails (= 3.0.3)

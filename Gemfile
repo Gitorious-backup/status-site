@@ -7,7 +7,7 @@ gem 'bcrypt-ruby'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
-group :test do 
+group :test do
   gem "shoulda"
 end
 
@@ -15,6 +15,8 @@ gem "oauth"
 gem "twitter"
 
 gem "mocha"
+
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # Use unicorn as the web server
 # gem 'unicorn'
